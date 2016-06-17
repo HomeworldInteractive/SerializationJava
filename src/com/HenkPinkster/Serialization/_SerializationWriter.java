@@ -16,6 +16,12 @@ public class _SerializationWriter {
 		return pointer;
 	}
 	
+	public static int writeBytes(byte[] dest, int pointer, char value){
+		dest[pointer++] = (byte)((value >> 8) & 0xff);
+		dest[pointer++] = (byte)((value >> 0) & 0xff);
+		return pointer;
+	}
+	
 	public static int writeBytes(byte[] dest, int pointer, int value){
 		dest[pointer++] = (byte)((value >> 24) & 0xff);
 		dest[pointer++] = (byte)((value >> 16) & 0xff);
@@ -33,6 +39,21 @@ public class _SerializationWriter {
 		dest[pointer++] = (byte)((value >> 16) & 0xff);
 		dest[pointer++] = (byte)((value >> 8) & 0xff);
 		dest[pointer++] = (byte)((value >> 0) & 0xff);
+		return pointer;
+	}
+	
+	public static int writeBytes(byte[] dest, int pointer, float value){
+		int data = Float.floatToIntBits(value);
+		return writeBytes(dest, pointer, data);
+	}
+	
+	public static int writeBytes(byte[] dest, int pointer, double value){
+		long data = Double.doubleToLongBits(value);
+		return writeBytes(dest, pointer, data);
+	}
+	
+	public static int writeBytes(byte[] dest, int pointer, boolean value){
+		dest[pointer++] = (byte)(value ? 1 : 0);
 		return pointer;
 	}
 }
